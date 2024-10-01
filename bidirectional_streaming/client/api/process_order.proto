@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+package bidirectional_streaming;
+
+option go_package = "IPC_types_gRPC/bidirectional_streaming/client/pkg/api;bidirectional_streaming";
+
+service BidirectionalStreamingService {
+  rpc processOrders(stream google.protobuf.StringValue) returns (stream CombinedDelivery);
+}
+
+message Order {
+  string id = 1;
+  repeated string items = 2;
+  string description = 3;
+  float price = 4;
+  string destination = 5;
+}
+
+message CombinedDelivery {
+  string id = 1;
+  string status = 2;
+  repeated Order ordersList = 3;
+}
